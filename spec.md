@@ -174,7 +174,7 @@ Mức “tự làm” vẫn có điều kiện an toàn. Bảng dưới ghi mứ
 6. Hết giữ không làm đổi vé và không tự gia hạn. Dùng thời điểm hết hạn của lần giữ, không đặt lại 20 phút khi tải lại màn hình. Bản demo giả lập nhắc khi còn 2 phút, hết giờ tắt xác nhận và hiện “Tra cứu lại”. Không có tool nhả sớm nên không hứa nút huỷ giữ tức thì; khách có thể bỏ qua và chỗ tự nhả khi hết hạn.
 7. Chỉ ghi “đã…” sau kết quả tool thành công. Không coi lỗi mạng là bằng chứng thao tác chưa xảy ra. Nhánh sửa lỗi giữ BM 205 chỉ khi tool cho phép, không giả định giữ được sau mọi lần đổi.
 
-### 4.4. Thử mức trên ba ca (diễn tập thiết kế, chưa phải kiểm thử prototype)
+### 4.4. Thử mức trên ba ca 
 
 | Ca | AI và người dùng đi qua bước nào? | Cái sai bị chặn? | Còn tự làm khi phải hỏi? | Có bắt chờ vô ích? |
 |---|---|---|---|---|
@@ -183,8 +183,6 @@ Mức “tự làm” vẫn có điều kiện an toàn. Bảng dưới ghi mứ
 | **Bình thường / #12** | Giả lập yêu cầu lúc 15:00; tra cứu → giữ hai chỗ BM 205 09:30 ngày 13/11 → báo “Chưa đổi vé; giữ đến 15:20” và hai tên → khách hỏi gia đình; hết giờ tự nhả. | Có, ở thiết kế: tránh hiểu giữ là đổi; không dùng quyền đổi. | Không đổi dù khách đã nhờ giữ. Phạm vi giữ cả đặt chỗ hiện rõ, không dùng làm xác nhận đổi. | Không: giữ ngay khi đủ điều kiện, không chờ nhân viên hoặc thêm một bước duyệt giữ. |
 
 **Kiểm tra nhánh phục hồi #9:** trạng thái đã đổi nhầm phải được nạp riêng; nhận lỗi → chuyển ngay → thử giữ chuyến đúng nếu được phép → không tự đổi lần hai/hoàn. Cách này giảm thiệt hại tiếp diễn, không bảo đảm khôi phục lần đổi miễn phí đã mất.
-
-**Giới hạn còn lại:** đây mới là kiểm tra logic trên giấy. Người dựng prototype và người kiểm tra cần bấm thử cả hết hạn, thiếu chỗ mới phát sinh, sửa lựa chọn và kết quả tool không rõ; chưa được ghi là đã Pass trên giao diện.
 
 ### 4.5. Lời hứa với người dùng
 
