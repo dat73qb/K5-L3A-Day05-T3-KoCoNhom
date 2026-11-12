@@ -6,11 +6,35 @@
 
 ```markdown
 # Bài nộp LAB5 — [Track] · Nhóm [tên]
-[Danh sách thành viên và việc mỗi người làm — copy bảng từ README]
+**Lớp:** ____ · **Bàn / zone:** ____ · **Track:** ____
+
+| Họ và Tên | Mã Học Viên | Việc đã làm |
+|---|---|---|
+|  |  |  |
+|  |  |  |
+|  |  |  |
 
 ## §1. Lát cắt & phạm vi
-- Lát cắt (chép từ track).
-- 3 việc tính năng KHÔNG làm, mỗi việc một câu vì sao.
+**Lát cắt** (chép từ track T3):
+
+> Trong **Đặt chỗ của tôi**, khi **hành khách** vừa nhận tin chuyến bay bị huỷ và nhắn hỏi, **AI đề xuất và giữ chỗ chuyến thay thế, hỏi lại cho rõ, đổi vé, hay chuyển nhân viên**, để khách tới nơi kịp mà không mất vé hay tiền vì một thao tác không đảo lại được.
+
+| Một người dùng | Một việc | Một quyết định của AI | Một kết quả |
+|---|---|---|---|
+| hành khách | vừa nhận tin chuyến bị huỷ, nhắn hỏi | đề xuất & giữ chỗ / hỏi lại / đổi vé / chuyển nhân viên | khách tới nơi kịp, không mất vé hay tiền vì thao tác không đảo được |
+
+**3 việc tính năng KHÔNG làm:**
+
+1. **Không đổi tên hành khách; không xử lý trẻ em bay một mình** — luôn chuyển nhân viên.
+   *Vì sao:* đổi tên liên quan giấy tờ tuỳ thân và quy định hãng; trẻ bay một mình có quy trình riêng. AI không có tool nào làm được việc này, và sai thì không đảo lại được (khách có thể bị từ chối lên máy bay).
+
+2. **Không hứa bồi thường tiền mặt khi chuyến bị huỷ do thời tiết (bất khả kháng)** — chỉ nêu đúng quyền: đổi miễn phí 1 lần hoặc hoàn toàn bộ.
+   *Vì sao:* chính sách hãng Bay Mẫu (dữ liệu dựng) ghi rõ "huỷ do thời tiết thì không bồi thường tiền mặt". AI hứa sai → khách mất lòng tin, nhân viên phải đi gỡ (track nêu đúng rủi ro này).
+
+3. **Không tự đổi vé, gửi yêu cầu hoàn vé khi khách chưa xác nhận rõ chuyến nào và cho hành khách nào.**
+   *Vì sao:* `doi_chuyen_bay` dùng mất lần đổi miễn phí duy nhất; `gui_yeu_cau_hoan_ve` gửi rồi không huỷ được. Đây là ranh giới thẩm quyền cứng: AI chỉ giữ chỗ tạm, không tự quyết thay khách ở những thao tác không đảo lại được.
+
+---
 
 ## §2. Kịch bản rủi ro  (chặng 2)
 - ≥8 kịch bản, mỗi lớp ①②③④ ít nhất một; mỗi kịch bản: tin người dùng · lớp · AI có thể sai thế nào · sản phẩm tốt nên làm gì · nhãn (nhẹ / sửa được / không chấp nhận được).
