@@ -9,10 +9,10 @@
 
 | Họ và Tên | Mã Học Viên | Việc đã làm |
 |---|---|---|
-| Nguyễn Tiến Đạt | 2A202603452 |  |
-| Lưu Văn Việt Đức | 2A202603445 |  |
-| Nguyễn Công Tĩnh | 2A202603373 |  |
-| Nguyễn Quỳnh Trang | 2A202603477 |  |
+| Nguyễn Tiến Đạt | 2A202603452 | Khởi tạo repo & `spec.md`; §1 Lát cắt & phạm vi (3 việc KHÔNG làm); danh sách thành viên; phụ trách sản phẩm (ý kiến thảo luận §4.2). |
+| Lưu Văn Việt Đức | 2A202603445 | §5 Prototype (5.1–5.3); dựng `prototype/index.html` (HTML/CSS/JS) + ảnh minh chứng K2; phụ trách prototype (ý kiến §4.2). |
+| Nguyễn Công Tĩnh | 2A202603373 | §2 Kịch bản rủi ro (13 kịch bản, 2 kịch bản đắt nhất K1/K2); §6 Tốt là gì (TC1–TC3, chấm thử prototype, lỗi còn lại). |
+| Nguyễn Quỳnh Trang | 2A202603477 | §3 Khi AI sai (K1, K2, nguyên tắc HAX/PAIR); §4 Mức tự chủ (4.1–4.5); thảo luận & thống nhất nhóm (§4.2). |
 
 ## §1. Lát cắt & phạm vi
 **Lát cắt** (chép từ track T3):
