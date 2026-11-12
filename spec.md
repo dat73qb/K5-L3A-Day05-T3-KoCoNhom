@@ -276,4 +276,9 @@ Ba tiêu chí chấm bằng đếm và so khớp, người ngoài nhóm chấm r
 6. **Thời gian chờ nhân viên không hiển thị:** không có dữ liệu hàng chờ nên không hứa số phút; khách đang gấp chưa biết phải chờ bao lâu.
 
 ## §7. Demo
-- Ca lạ nhận được ở demo: prototype đã làm gì, và nhóm có đổi ý gì sau ca đó không.
+
+- **Ca lạ nhận được ở demo:** khách gõ *"Cho mình bay chuyến 7h thôi, bé để sau."* — một câu tự do ngoài kịch bản, có ý muốn tách mẹ khỏi bé Gia Bình (5 tuổi), không khớp bất kỳ mẫu câu dựng sẵn nào của ô chat.
+
+- **Prototype đã làm gì:** `sendMessage()` không nhận diện được mẫu nên rơi vào `COPY.ai.fallback` — trả lời *"Nội dung đã được thêm vào chat demo… chưa có thao tác thay đổi vé từ tin nhắn này"* và **không gọi tool nào** (Lịch sử mock tool ghi 0 lời gọi `doi_chuyen_bay` / `gui_yeu_cau_hoan_ve`). Đổi/hoàn vốn chỉ chạy qua nút chọn → xem lại → bấm xác nhận, nên câu lạ không tự kích hoạt thay đổi vé. Kết quả: an toàn — không tách trẻ, không mất lần đổi miễn phí; đúng giới hạn đã ghi ở §6.3 #1 ("Chat chỉ hiểu câu dựng sẵn").
+
+- **Nhóm có đổi ý không:** không đổi mức tự chủ. Ranh giới "chữ là dữ liệu, không phải lệnh" và "đổi/hoàn chỉ qua nút xác nhận" giữ nguyên vì đã chặn đúng thao tác không đảo được. Ca lạ chỉ khẳng định lại lỗi còn lại #1; điều đáng cải thiện (không phải nới quyền) là thêm nhánh **nhận diện ý tách trẻ** để trả lời cụ thể — chặn và giải thích bé 5 tuổi không thể bay riêng, gợi ý BM 201/205 cho cả hai hoặc chuyển nhân viên — thay vì chỉ trả lời fallback chung.
