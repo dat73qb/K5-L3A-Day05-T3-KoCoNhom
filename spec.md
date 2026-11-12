@@ -229,8 +229,52 @@ Mức cần duyệt đổi lời hứa từ “nói đổi là AI đổi ngay”
 
 **Cách xử lý sự cố:** khi kết quả chưa xác định, hệ thống không tự gửi lại. Khi đã đổi nhầm, hệ thống không tự đổi lần hai hoặc tạo hoàn tác giả; chuyển nhân viên kèm thông tin bàn giao và báo đúng kết quả công cụ.
 
-## §6. Tốt là gì  (chặng 6 — nhẹ, bỏ được nếu thiếu giờ)
-- 3 tiêu chí Pass/Fail chấm được; thiết kế của nhóm đạt tiêu chí nào trên 2 kịch bản đắt nhất; lỗi còn lại.
+## §6. Tốt là gì (chặng 6)
+
+### 6.1. Ba tiêu chí Pass/Fail
+
+| # | Tiêu chí | Pass khi | Fail khi | Cách chấm |
+|---|---|---|---|---|
+| **TC1** | **Không thao tác không đảo được khi chưa xác nhận rõ** | `doi_chuyen_bay` / `gui_yeu_cau_hoan_ve` chỉ được gọi **sau** khi khách bấm nút xác nhận trên thẻ xem lại ghi đủ: chuyến + ngày giờ + **tên từng hành khách**. Với hoàn vé, thẻ có thêm 3 dòng "không huỷ được · về phương thức gốc · tới 90 ngày" và ô "Tôi hiểu…" phải được tích. | Có ≥1 lời gọi đổi/hoàn chỉ từ tin nhắn chữ ("ok", "đổi luôn", "huỷ hết"), khi giữ chỗ đã hết hạn, hoặc thẻ thiếu một trong các thông tin trên. | Đếm dòng `doi_chuyen_bay` / `gui_yeu_cau_hoan_ve` trong **Lịch sử tool** trước và sau khi bấm xác nhận. |
+| **TC2** | **Mọi thông tin AI nói khớp dữ liệu** | Mọi giờ bay, số chỗ, trạng thái chuyến và quyền lợi AI nói/hiện đều có trong kết quả `tra_cuu_dat_cho` hoặc chính sách Bay Mẫu (kể cả giả định hoàn tiền đã ghi ở §3). Ca huỷ do thời tiết **không có câu nào** hứa bồi thường tiền mặt. | Có ≥1 con số, trạng thái hay quyền lợi không có trong dữ liệu. | So từng con số trên màn hình với fixture §2; tìm chữ "bồi thường" trong trang. |
+| **TC3** | **Không tách hay bỏ sót hành khách** | Giữ chỗ và đổi vé luôn áp cho **cả hai** hành khách trên cùng chuyến; chuyến không đủ chỗ cho cả hai thì không có nút giữ/đổi. Hoàn một phần chỉ được đi tiếp khi không để bé 5 tuổi bay một mình; nếu có thì chặn gửi và chuyển nhân viên. | Có ≥1 lần giữ/đổi cho một phần hành khách, hoặc cho gửi hoàn khiến trẻ bay một mình. | Xem `passengerIds` trong Lịch sử tool và trạng thái nút gửi. |
+
+Ba tiêu chí chấm bằng đếm và so khớp, người ngoài nhóm chấm ra cùng kết quả. Mỗi tiêu chí gắn với một kiểu mất mát không đảo được ở §2: TC1 với mất lần đổi miễn phí / yêu cầu hoàn không rút được (#3, #4, #10), TC2 với hứa sai quyền lợi (#5, #1), TC3 với tách mẹ khỏi bé (#4, #6).
+
+### 6.2. Chấm thử trên prototype
+
+**Cách thử:** mở `prototype/index.html` bằng Chrome, cấu hình mock mặc định (tra cứu / giữ / đổi-hoàn / chuyển đều thành công), bấm qua từng ca và đọc **Lịch sử tool** sau mỗi bước. Thử thêm 3 nhánh: gõ "ok", bấm "Hết hạn giữ chỗ", chọn hoàn chỉ cho mẹ.
+
+| Bước thử | Kết quả quan sát được |
+|---|---|
+| K2 – mở ca, gõ "ok" | 0 lời gọi đổi. AI trả lời "ok chưa chỉ rõ chuyến… Mình chưa chọn chuyến, giữ chỗ hay đổi vé thay bạn." |
+| K2 – thẻ BM 217 | Hiện "1/2 chỗ — không đủ", **không có nút** giữ/đổi. Chỉ có nút cho BM 201 và BM 205. |
+| K2 – bấm "Chọn BM 201" | Tra cứu lại → `giu_cho_chuyen_moi` với `["an","binh"]` → "Chưa đổi vé", có mốc hết hạn 20 phút. Vẫn 0 lời gọi đổi. |
+| K2 – xem lại → xác nhận | Thẻ ghi đủ 2 tên, phí 0đ, cảnh báo dùng lần đổi miễn phí duy nhất. Tra cứu lần cuối rồi mới gọi `doi_chuyen_bay` (1 lần, đủ 2 người). |
+| K2 – để giữ chỗ hết hạn rồi bấm xác nhận | Nút xác nhận bị khoá, 0 lời gọi đổi. |
+| K1 – mở ca, gõ "ok" | 0 lời gọi hoàn. AI nói chưa gửi, hỏi hoàn cho ai, nêu không huỷ được / phương thức gốc / 90 ngày, nhắc phương án đổi miễn phí. |
+| K1 – chưa chọn hành khách | Nút "Xem lại yêu cầu hoàn" bị khoá. |
+| K1 – chỉ chọn Nguyễn Minh An | Không cho gửi (bé 5 tuổi sẽ bay một mình), tự `chuyen_nhan_vien`, 0 lời gọi hoàn. |
+| K1 – chọn cả hai, chưa tích ô | Thẻ hiện đủ 3 cảnh báo, nút gửi khoá, 0 lời gọi hoàn. |
+| K1 – tích "Tôi hiểu yêu cầu đã gửi không thể huỷ" → gửi | Nút ghi "Gửi yêu cầu hoàn cho 2 người"; đúng 1 lời gọi `gui_yeu_cau_hoan_ve`; kết quả hiện mã yêu cầu mô phỏng. |
+| Toàn trang | Không có chữ "bồi thường". |
+
+| Tiêu chí | K1 — "Huỷ hết đi, hoàn tiền" | K2 — "Tối nay đổi luôn cho 2 mẹ con" |
+|---|---|---|
+| **TC1** | **Pass** — hoàn chỉ chạy sau chọn hành khách + tích ô + bấm gửi; "ok" không gửi. | **Pass** — đổi chỉ chạy sau giữ chỗ + thẻ xem lại + bấm xác nhận; "ok" và giữ hết hạn đều không đổi. |
+| **TC2** | **Pass** — nói đúng quyền đổi miễn phí 1 lần / hoàn toàn bộ, không có bồi thường tiền mặt. Phương thức hoàn và 90 ngày là giả định đã ghi rõ ở §3, không phải dữ liệu tra cứu. | **Pass** — BM 217 1/2 chỗ, BM 201 9 chỗ, BM 205 4 chỗ, đúng giờ và ngày trong fixture. |
+| **TC3** | **Pass** — chọn riêng mẹ thì bị chặn và chuyển nhân viên. | **Pass** — BM 217 không có nút; giữ và đổi đều gửi `["an","binh"]`. |
+
+**Kết luận:** thiết kế đạt 3/3 tiêu chí trên cả hai kịch bản đắt nhất, trong phạm vi dữ liệu dựng và mock tool.
+
+### 6.3. Lỗi còn lại
+
+1. **Chat chỉ hiểu câu dựng sẵn:** không có lời gọi AI thật, ô chat nhận diện bằng mẫu câu. Một câu lạ (ví dụ "cho mình bay chuyến 7h thôi, bé để sau") rơi vào câu trả lời mặc định thay vì được hiểu đúng. Các tiêu chí trên vẫn giữ vì đổi/hoàn chỉ chạy qua nút, nhưng trải nghiệm hỏi lại kém hơn thiết kế ở §3.
+2. **Giữ chỗ hết hạn không gia hạn được:** khách đi hỏi người nhà quá 20 phút (#12) thì phải tra cứu và giữ lại; nếu chuyến đã hết chỗ thì mất phương án. Có nhắc trước, chưa có cách giữ lâu hơn vì tool không hỗ trợ.
+3. **Đổi nhầm đã xảy ra (#9) không cứu được lần đổi miễn phí:** thiết kế chỉ giảm thiệt hại (chuyển nhân viên ngay, thử giữ chuyến đúng), không hoàn tác.
+4. **Yêu cầu hoàn đã gửi (#11) không rút được:** chỉ chuyển nhân viên, không bảo đảm kết quả.
+5. **Chưa thử ca ① không có dữ liệu (#13 dự báo thời tiết) và #5 trên prototype:** TC2 mới chấm trên lời thoại K1/K2; câu hỏi bồi thường tự do chưa có luồng riêng.
+6. **Thời gian chờ nhân viên không hiển thị:** không có dữ liệu hàng chờ nên không hứa số phút; khách đang gấp chưa biết phải chờ bao lâu.
 
 ## §7. Demo
 - Ca lạ nhận được ở demo: prototype đã làm gì, và nhóm có đổi ý gì sau ca đó không.
