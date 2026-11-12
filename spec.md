@@ -192,10 +192,42 @@ Mức “tự làm” vẫn có điều kiện an toàn. Bảng dưới ghi mứ
 
 Mức cần duyệt đổi lời hứa từ “nói đổi là AI đổi ngay” thành “AI chuẩn bị và giữ chỗ; khách quyết định thao tác dùng quyền đổi hoặc gửi hoàn”. Khách giữ quyền quyết định, còn AI giảm thời gian tra cứu và nguy cơ hết chỗ.
 
-## §5. Prototype  (chặng 5)
-- Link hoặc file · công cụ · phần nào mock · có lời gọi AI thật không.
-- 1–2 ảnh có đánh số; mỗi số: thể hiện gì · nguyên tắc HAX/PAIR nào · mức tự chủ nào.
-- Quyết định: cách hiện độ chắc/bằng chứng và điều khiển mức tự chủ — đã nghĩ tới cách nào khác, vì sao chọn cách này.
+## §5. Prototype (chặng 5)
+
+### 5.1. File, công cụ và phạm vi mô phỏng
+
+- **File:** [Mở file prototype](prototype/index.html). Tải file và mở bằng Chrome để thao tác.
+- **Công cụ:** HTML, CSS và JavaScript thuần, tích hợp trong một file; không cần backend hoặc cài đặt thư viện.
+- **Giao diện:** hai màn hình chính: đặt chỗ/chat/lựa chọn và xem lại/xác nhận.
+- **Luồng minh hoạ:** K1 – hoàn vé; K2 – đổi cho hai mẹ con; #9 – phục hồi sau đổi nhầm; #12 – chỉ giữ chỗ.
+- **Phần mock:** dữ liệu đặt chỗ, chính sách và năm công cụ: tra cứu, giữ chỗ, đổi chuyến, gửi yêu cầu hoàn, chuyển nhân viên. Không có giao dịch hoặc chuyển nhân viên thật.
+- **Lời gọi AI thật:** không có. Ô chat dùng lời thoại và xử lý tình huống dựng sẵn, chưa hỗ trợ đầy đủ câu hỏi tự do.
+
+### 5.2. Ảnh minh chứng và nguyên tắc thiết kế
+
+**Ảnh 1 – K2: lựa chọn chuyến và chặn phương án thiếu chỗ.**
+
+![Ảnh 1 – K2: lựa chọn chuyến và chặn phương án thiếu chỗ](prototype/images/k2-lua-chon.png)
+
+**Ảnh 2 – K2: kết quả sau khi khách xác nhận và đổi vé thành công mô phỏng.**
+
+![Ảnh 2 – K2: đổi vé thành công mô phỏng](prototype/images/k2-doi-thanh-cong.png)
+
+| Vị trí | Thể hiện gì | Nội dung nguyên tắc HAX/PAIR áp dụng | Mức tự chủ |
+|---|---|---|---|
+| Ảnh 1 – [1] Trợ lý AI | Nêu khả năng hỗ trợ, giới hạn và trạng thái chưa đổi vé | Làm rõ khả năng và giới hạn hệ thống | AI hỗ trợ tra cứu và chuẩn bị; khách quyết định |
+| Ảnh 1 – [3] Các lựa chọn | BM 217 chỉ còn một chỗ, không cho giữ/đổi cho hai người; nêu rõ các chuyến khác bay sáng hôm sau | Giải thích đề xuất, hỗ trợ người dùng kiểm soát lựa chọn | Không tự chọn chuyến hoặc tách hai hành khách |
+| Ảnh 2 – [3] Sửa chuyến và quay lại | Có đường quay lại lựa chọn; không phải hoàn tác giao dịch đã thành công | Hỗ trợ điều hướng và sửa lựa chọn trước hành động | Quay lại không tự thực hiện giao dịch mới |
+| Ảnh 2 – [4] Cảnh báo tác động | Hiện việc sử dụng lần đổi miễn phí duy nhất | Giúp người dùng hiểu hậu quả của hành động | Đổi vé cần xác nhận cụ thể của khách |
+| Ảnh 2 – [5] Trạng thái giữ chỗ | Chỗ giữ đã dùng để đổi vé; kết quả đổi được ghi rõ là mô phỏng | Hiển thị trạng thái và phản hồi sau hành động | Chỉ báo thành công khi mock tool trả thành công; khoá gửi lại |
+
+### 5.3. Quyết định thiết kế
+
+**Cách thể hiện bằng chứng và độ chắc:** nhóm chọn hiển thị thông tin cụ thể như số chỗ, trạng thái chuyến, chính sách, hạn giữ và kết quả công cụ. Nhóm cân nhắc dùng phần trăm độ tin cậy nhưng không chọn vì prototype không có cơ sở tính toán; con số có thể khiến khách hiểu nhầm mức bảo đảm.
+
+**Cách điều khiển mức tự chủ:** khách chọn rõ chuyến và hành khách trước khi hệ thống tra cứu lại và giữ chỗ. Giữ chỗ không đồng nghĩa với đổi vé. Đổi hoặc gửi hoàn cần bước xem lại và xác nhận riêng. Nhóm không chọn thực hiện ngay sau câu “ok” vì câu này chưa xác định phương án, có nguy cơ làm mất lần đổi miễn phí hoặc gửi yêu cầu hoàn không thể rút.
+
+**Cách xử lý sự cố:** khi kết quả chưa xác định, hệ thống không tự gửi lại. Khi đã đổi nhầm, hệ thống không tự đổi lần hai hoặc tạo hoàn tác giả; chuyển nhân viên kèm thông tin bàn giao và báo đúng kết quả công cụ.
 
 ## §6. Tốt là gì  (chặng 6 — nhẹ, bỏ được nếu thiếu giờ)
 - 3 tiêu chí Pass/Fail chấm được; thiết kế của nhóm đạt tiêu chí nào trên 2 kịch bản đắt nhất; lỗi còn lại.
