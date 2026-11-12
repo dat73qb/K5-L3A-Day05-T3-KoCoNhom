@@ -213,13 +213,14 @@ Mức cần duyệt đổi lời hứa từ “nói đổi là AI đổi ngay”
 
 ![Ảnh 2 – K2: đổi vé thành công mô phỏng](prototype/images/k2-doi-thanh-cong.png)
 
-| Vị trí | Thể hiện gì | Nội dung nguyên tắc HAX/PAIR áp dụng | Mức tự chủ |
+| Vị trí | Thể hiện gì | Nguyên tắc HAX/PAIR | Mức tự chủ |
 |---|---|---|---|
-| Ảnh 1 – [1] Trợ lý AI | Nêu khả năng hỗ trợ, giới hạn và trạng thái chưa đổi vé | Làm rõ khả năng và giới hạn hệ thống | AI hỗ trợ tra cứu và chuẩn bị; khách quyết định |
-| Ảnh 1 – [3] Các lựa chọn | BM 217 chỉ còn một chỗ, không cho giữ/đổi cho hai người; nêu rõ các chuyến khác bay sáng hôm sau | Giải thích đề xuất, hỗ trợ người dùng kiểm soát lựa chọn | Không tự chọn chuyến hoặc tách hai hành khách |
-| Ảnh 2 – [3] Sửa chuyến và quay lại | Có đường quay lại lựa chọn; không phải hoàn tác giao dịch đã thành công | Hỗ trợ điều hướng và sửa lựa chọn trước hành động | Quay lại không tự thực hiện giao dịch mới |
-| Ảnh 2 – [4] Cảnh báo tác động | Hiện việc sử dụng lần đổi miễn phí duy nhất | Giúp người dùng hiểu hậu quả của hành động | Đổi vé cần xác nhận cụ thể của khách |
-| Ảnh 2 – [5] Trạng thái giữ chỗ | Chỗ giữ đã dùng để đổi vé; kết quả đổi được ghi rõ là mô phỏng | Hiển thị trạng thái và phản hồi sau hành động | Chỉ báo thành công khi mock tool trả thành công; khoá gửi lại |
+| Ảnh 1 – [1] Trợ lý AI | Nêu khả năng hỗ trợ, giới hạn mô phỏng và trạng thái chưa đổi vé | Thông tin nền giúp hiểu phạm vi hệ thống; không tính thêm nguyên tắc ngoài ba nguyên tắc đã chọn ở §3.3 | AI tra cứu và chuẩn bị; không tự quyết định đổi/hoàn |
+| Ảnh 1 – [3] Các lựa chọn | Khách phải chọn rõ chuyến; không tự chọn chuyến sáng mai thay yêu cầu tối nay | **HAX G10 — Thu hẹp phạm vi khi nghi ngờ:** đưa lựa chọn cụ thể thay vì đoán ý khách | Chỉ giữ khi khách đã chọn rõ và còn đủ chỗ; chưa được đổi vé |
+| Ảnh 1 – thẻ BM 217 trong [3] | Hiện “1/2 chỗ — không đủ”, giải thích không thể giữ/đổi cho hai người | **HAX G11 — Giải thích vì sao:** dùng số chỗ và số hành khách làm căn cứ chặn phương án | Không giữ/đổi một phần hành khách để đáp ứng yêu cầu cả hai |
+| Ảnh 2 – [4] Cảnh báo tác động | Hiện phí 0đ và tác động sử dụng lần đổi miễn phí duy nhất | **HAX G11 — Giải thích vì sao:** làm rõ hậu quả của thao tác | Đổi vé cần khách xem lại và xác nhận riêng |
+| Ảnh 2 – [3] Sửa chuyến và quay lại | Hiện đường quay lại lựa chọn; không phải nút hoàn tác giao dịch đã thành công | **PAIR — Errors + Graceful Failure:** liên quan đường sửa lựa chọn trước thực thi; ảnh sau thành công chỉ chứng minh có đường điều hướng, không chứng minh hoàn tác | Quay lại không tự thực hiện giao dịch mới |
+| Ảnh 2 – [5] Trạng thái giữ chỗ | Hiện chỗ giữ đã dùng để đổi vé, kết quả thành công mô phỏng và nút xác nhận bị khoá | Bổ trợ **PAIR — Errors + Graceful Failure:** phân biệt trạng thái và ngăn lặp thao tác; ảnh này chưa minh hoạ nhánh thất bại | Chỉ báo thành công theo kết quả mock tool; không gửi lại |
 
 ### 5.3. Quyết định thiết kế
 
