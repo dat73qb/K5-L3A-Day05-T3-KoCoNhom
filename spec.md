@@ -79,10 +79,6 @@ Lớp: ① nguồn sự thật · ② mơ hồ / thiếu thông tin · ③ ngoà
 
 ## §3. Khi AI sai (chặng 3)
 
-**Trạng thái:** đề xuất của người phụ trách UX, chờ nhóm xác nhận. Các vị trí [1]–[6] dưới đây là yêu cầu bàn giao, chưa phải bằng chứng prototype đã dựng.
-
-**Dữ liệu giả bổ sung phục vụ K1:** chính sách hoàn của Bay Mẫu trong prototype là hoàn toàn bộ về phương thức thanh toán gốc, thời gian xử lý có thể tới 90 ngày. Đây là giả định mô phỏng dựa trên phần tham khảo của đề, không phải kết quả tra cứu thật. Không bịa số tiền, số thẻ hoặc ngày tiền về chính xác. Nếu thiếu dữ liệu về quyền hoàn hay phương thức hoàn trong một ca mới, chặn gửi và chuyển nhân viên xác minh.
-
 ### 3.1. K1 — “Thôi huỷ hết đi, hoàn tiền cho mình.” (#3)
 
 **Lời AI nguyên văn:**
@@ -177,21 +173,6 @@ Mức “tự làm” vẫn có điều kiện an toàn. Đây là đề xuất 
 > “Mình tra cứu và giữ chỗ phù hợp trong 20 phút khi bạn đã chọn rõ chuyến và đủ chỗ. Mình chỉ đổi vé hoặc gửi yêu cầu hoàn sau khi bạn xem thông tin và xác nhận. Nếu có lỗi hoặc việc ngoài khả năng xử lý, mình chuyển nhân viên kèm lịch sử; mình không thể bảo đảm hoàn tác.”
 
 Mức cần duyệt đổi lời hứa từ “nói đổi là AI đổi ngay” thành “AI chuẩn bị và giữ chỗ; khách quyết định thao tác dùng quyền đổi hoặc gửi hoàn”. Khách giữ quyền quyết định, còn AI giảm thời gian tra cứu và nguy cơ hết chỗ.
-
-### 4.6. Bàn giao luồng cho người dựng prototype
-
-**Phạm vi:** tối đa hai màn hình; màn 1 là chat + lựa chọn, màn 2 là xem lại/xác nhận. Thông báo kết quả, hết hạn và chuyển nhân viên hiển thị trong hai màn này. Các kết quả tool đều mock; bảng dưới là yêu cầu dựng, không phải mô tả tính năng đã có.
-
-| Luồng | Màn 1 — chat/lựa chọn | Màn 2 — xem lại/xác nhận | Kết quả và đường lui |
-|---|---|---|---|
-| **K1** | Nạp câu #3; hiện lời AI §3.1; “Xem chuyến thay thế”, chọn từng hành khách, “Xem lại yêu cầu hoàn”, “Gặp nhân viên”. | Chưa chọn người thì không tiếp tục. Hiện quyền hoàn, phương thức, tới 90 ngày, không huỷ được. Tích ô mới bật “Gửi yêu cầu hoàn cho [số người]”; có “Sửa hành khách” và “Quay lại”. | Thành công: trạng thái đã gửi, không có nút rút hoàn. Lỗi chưa rõ: không cho gửi lại, chuyển người. Chọn để bé đi riêng: chuyển người trước khi gửi. |
-| **K2 — phòng lỗi** | Nạp #4; BM 217 “1/2 chỗ — không đủ” không có nút thao tác. Hai chuyến sáng mai ghi đầy đủ ngày giờ; nút “Chọn BM 201 · 13/11 07:00” hoặc BM 205; có “Không thể bay sáng mai — gặp nhân viên”. | Chọn chuyến → mock giữ thành công → đồng hồ 20 phút, hai tên, chưa đổi; thẻ chuyến cũ/mới, phí 0đ, quyền đổi một lần; “Xác nhận đổi cho cả 2 người”, “Sửa chuyến”, “Gặp nhân viên”. | Hết hạn: tắt xác nhận, “Tra cứu lại”. Sửa chuyến: vô hiệu duyệt cũ. Hết chỗ: không đổi, quay về lựa chọn. Thành công: chỉ hiện đúng chuyến/người đã đổi và quyền đổi đã dùng. |
-| **#9 — phục hồi** | Chế độ demo nạp trạng thái lỗi từ trước: đã đổi BM 201 trong khi khách xác nhận BM 205; hiện câu khách #9 và lời nhận lỗi §3.2. | Dùng khu vực chi tiết để hiển thị yêu cầu đúng, kết quả sai, kết quả giữ nếu có, trạng thái chuyển và tóm tắt nhân viên. Không có nút tự đổi lại/hoàn tác. | Nhân viên nhận lịch sử ngay; giữ thất bại không chặn chuyển. Chuyển thất bại có nút thử chuyển lại, không hứa vé đã được sửa. |
-| **#12 — bình thường** | Nạp yêu cầu giữ 09:30; mock giữ BM 205 hai người; hiện hai tên, “Chưa đổi vé”, hạn 15:20 nếu bắt đầu 15:00. | Chỉ mở thẻ duyệt đổi khi khách chủ động muốn đổi; không tự đẩy tới xác nhận đổi chỉ vì đã giữ. | Có điều khiển mô phỏng hết 20 phút; không tự đổi, không tự gia hạn, cho tra cứu lại. |
-
-**Ảnh bàn giao cần chụp sau khi dựng:** ảnh màn 1 đánh dấu [1] nhận diện AI, [2] căn cứ/chỗ còn, [3] lựa chọn/sửa; ảnh màn 2 đánh dấu [4] hậu quả và nút xác nhận, [5] giữ chỗ/hết hạn, [6] đường chuyển nhân viên. Khi chụp thực tế, cập nhật §5 với file ảnh và vị trí có thật.
-
-**Thứ tự demo đề xuất:** K2 + câu xác nhận “ok” để chứng minh không đoán → chọn chuyến cụ thể → giữ và duyệt → mở nhánh #9 đã nạp lỗi để chứng minh cách phục hồi. Nói rõ #9 là trạng thái lỗi giả lập, không phải hệ thống cố tình đổi sai sau xác nhận đúng. K1 và #12 là các ca kiểm tra bổ sung có thể chuyển bằng điều khiển demo bên ngoài giao diện khách.
 
 ## §5. Prototype  (chặng 5)
 - Link hoặc file · công cụ · phần nào mock · có lời gọi AI thật không.
